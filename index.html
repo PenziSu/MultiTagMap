@@ -1,0 +1,120 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>多標籤地圖</title>
+<style type="text/css">
+ #map{
+      width: 90%;
+      height: 400px;
+     }
+ div{
+      padding:8px;
+    }
+ #sidebar_left{
+　background-color:#FFECC9;
+　width:120px;
+　height:400px;
+　text-align:center;
+　line-height:400px;
+　float:left;
+ }
+ #content{
+　margin-left:120px;
+　margin-right:120px;
+　height:400px;
+　background-color:#F2FFF2;
+　text-align:center;
+　line-height:400px;
+ }
+</style>
+</head>
+<body>
+<!--<script type="text/javascript" src=""></script>-->
+<!--載入jQuery-->
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<!--載入tinyMap-->
+<script src="http://app.essoduke.org/js/tinyMap/jquery.tinyMap-3.3.11.js"></script>
+<!--載入GoogleApi-->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
+<!--載入多重輸入框-->
+<script type="text/javascript" src="jquery/multitextbox.js"></script>
+<div id="sidebar_left">
+  <div id="TextBoxDiv1">
+     <label>地址 #1 : </label><input type='textbox' class='addr' id='textbox1'>
+  </div>
+
+  <input type='button' value='新增地址' id='addButton'>
+  <input type='button' value='刪除地址' id='removeButton'>
+  <input type='button' value='地址清單' id='getButtonValue'>
+  </br>
+  </br>
+  <button type="button" id="submit">Click ME!</button>
+  </p>
+</div>
+<div id="content">
+ <div id="map" class="map"></div>
+</div>
+<script>
+var map = $('#map');
+
+(function () {
+
+    var map = $('#map');
+
+    map.tinyMap({
+        'center': '台中市長安路二段278號',
+        'zoom': 16,
+        'marker':[{                   
+            'addr':'台中市長安路二段278號',
+            'text':'台中市長安路二段278號',
+            //'icon':'http://www.pnglogo.com/wp-content/uploads/2015/10/Map-Marker-Red-PNG-02680.png',
+            'optimized':false
+         }], 
+        'event': {
+            'idle': {
+                'func': function () {
+                    // 建立 latLngBounds Class
+                    this.bounds = new google.maps.LatLngBounds();
+                },
+                'once': true
+            }
+        }
+    });
+    
+    $(document)
+        .on('click', '#submit', function () {
+            var addr = $('input.addr'),                
+                len = addr.length,
+                marker = [],
+                bounds = [];
+
+            addr.each(function (i) {
+                marker.push({
+                    'id': ('A' + i), // 自訂 ID
+                    'addr': this.value,
+                    'event': {
+                        'created': function () {
+                            // 利用 Marker created 事件
+                            // 當標記建立時將位置加入 bounds
+                            this.map.bounds.extend(this.getPosition());
+                            // 最後一個標記再執行 fitBounds
+                            if (i === len - 1) {
+                                this.map.fitBounds(this.map.bounds);
+                                // 清空 bounds
+                                this.map.bounds = new google.maps.LatLngBounds();
+                            }
+                        }
+                    }
+                });
+            });
+            // 變更標記
+            map.tinyMap('modify', {
+                'marker': marker
+            });
+            
+        });
+}());
+
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "jquery-tinyMap",
+  "homepage": "https://code.essoduke.org/tinyMap/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/essoduke/jQuery-tinyMap.git"
+  },
+  "authors": [
+    "Essoduke Chang <essoduke@gmail.com>"
+  ],
+  "description": "Easy to create the Google Maps on your page.",
+  "main": "jquery.tinyMap.min.js",
+  "keywords": [
+    "jquery",
+    "plugins",
+    "google maps",
+    "map"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "demo",
+    "lib"
+  ],
+  "dependencies": {
+    "jquery": ">= 2.0.0"
+  },
+  "_release": "e7646042d5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e7646042d5af63e790d7a2f115e0a2c17c1d9612"
+  },
+  "_source": "git://github.com/essoduke/jQuery-tinyMap.git",
+  "_target": "*",
+  "_originalSource": "jquery-tinyMap",
+  "_direct": true
+}
